@@ -7,11 +7,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "bookings")
+@Data
 //This will keep a record of already booked seats on a particular Date
 //of a particular transportId
 public class Booking {
