@@ -10,6 +10,7 @@ import com.example.makeyourtrip.RequestDto.AddTransportDto;
 import com.example.makeyourtrip.RequestDto.SearchFlightDto;
 import com.example.makeyourtrip.ResponseDtos.FlightResult;
 import com.example.makeyourtrip.Transformers.TransportTransformer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class TransportService {
 
     @Autowired
@@ -57,21 +59,15 @@ public class TransportService {
 
         List<Transport> transportList = route.getTransportList();
 
-        //I should put a filter (Date Filter)
-
         for(Transport transport:transportList){
-
             if(transport.getJourneyDate().equals(searchFlightDto.getJourneyDate())){
-
                 FlightResult result = TransportTransformer.convertEntityToFlightResult(transport);
                 result.setListOfStopInBetween(route.getListOfStopInBetween());
                 flightResults.add(result);
             }
         }
-        return flightResults;
     }
-
-
+        return flightResults;
     }
 
 
