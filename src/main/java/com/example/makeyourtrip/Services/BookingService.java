@@ -35,7 +35,7 @@ public class BookingService {
 
     public List<AvailableSeatResponseDto> getAvailableSeatsResponse(GetAvailableSeatsDto entryDto){
 
-        List<Booking> doneBookings = bookingRepository.findBookings(entryDto.getJourneyDate(),entryDto.getTransportId())
+        List<Booking> doneBookings = bookingRepository.findBookings(entryDto.getJourneyDate(),entryDto.getTransportId());
         Set<String> bookedSeats = new TreeSet<>();
         for(Booking booking:doneBookings){
             String str = booking.getSeatNos(); //1E,2E,3B,4B
@@ -100,6 +100,7 @@ public class BookingService {
 
         //Save kaise kroge figure out krna ////
 
+        return null;
 
     }
 

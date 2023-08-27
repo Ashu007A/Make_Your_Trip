@@ -33,7 +33,7 @@ public class BookingControllers {
     @PostMapping("/bookFlight")
     public ResponseEntity bookFlight(@RequestBody BookingRequest bookingRequest){
 
-
+    return null;
     }
 
 
