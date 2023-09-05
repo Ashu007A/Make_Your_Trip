@@ -1,7 +1,7 @@
 package com.example.makeyourtrip.Transformers;
 
 import com.example.makeyourtrip.Models.Booking;
-import com.example.makeyourtrip.RequestDto.BookingRequest;
+import com.example.makeyourtrip.RequestDTOs.BookingRequest;
 
 public class BookingTransformers {
 

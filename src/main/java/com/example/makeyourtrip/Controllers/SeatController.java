@@ -1,6 +1,6 @@
 package com.example.makeyourtrip.Controllers;
 
-import com.example.makeyourtrip.RequestDto.AddFlightSeatDto;
+import com.example.makeyourtrip.RequestDTOs.AddFlightSeatDto;
 import com.example.makeyourtrip.Services.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

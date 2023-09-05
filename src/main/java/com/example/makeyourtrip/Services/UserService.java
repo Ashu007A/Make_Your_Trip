@@ -2,7 +2,7 @@ package com.example.makeyourtrip.Services;
 
 import com.example.makeyourtrip.Models.User;
 import com.example.makeyourtrip.Repositories.UserRepository;
-import com.example.makeyourtrip.RequestDto.AddUserDto;
+import com.example.makeyourtrip.RequestDTOs.AddUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

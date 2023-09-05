@@ -1,7 +1,7 @@
 package com.example.makeyourtrip.Transformers;
 
 import com.example.makeyourtrip.Models.Routes;
-import com.example.makeyourtrip.RequestDto.AddRouteDto;
+import com.example.makeyourtrip.RequestDTOs.AddRouteDto;
 
 public class RouteTransformers {
 

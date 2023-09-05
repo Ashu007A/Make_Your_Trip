@@ -9,17 +9,17 @@ import com.example.makeyourtrip.Models.User;
 import com.example.makeyourtrip.Repositories.BookingRepository;
 import com.example.makeyourtrip.Repositories.TransportRepository;
 import com.example.makeyourtrip.Repositories.UserRepository;
-import com.example.makeyourtrip.RequestDto.BookingRequest;
-import com.example.makeyourtrip.RequestDto.GetAvailableSeatsDto;
-import com.example.makeyourtrip.ResponseDtos.AvailableSeatResponseDto;
+import com.example.makeyourtrip.RequestDTOs.BookingRequest;
+import com.example.makeyourtrip.RequestDTOs.GetAvailableSeatsDto;
+import com.example.makeyourtrip.ResponseDTOs.AvailableSeatResponseDto;
 import com.example.makeyourtrip.Transformers.BookingTransformers;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class BookingService {
@@ -32,6 +32,9 @@ public class BookingService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     public List<AvailableSeatResponseDto> getAvailableSeatsResponse(GetAvailableSeatsDto entryDto){
 
@@ -135,8 +138,60 @@ public class BookingService {
         return 0;
     }
 
+    public long findDistinctUsersWithAtLeastTwoSeatsInOneBooking() {
 
+        String sqlQuery = "SELECT COUNT(DISTINCT user_id) " +
+                "FROM (SELECT b.user_id " +
+                "FROM bookings b " +
+                "JOIN (SELECT booking_id, COUNT(*) as seat_count " +
+                "FROM booking_seats " +
+                "GROUP BY booking_id " +
+                "HAVING seat_count >= 2) AS subquery " +
+                "ON b.booking_id = subquery.booking_id) AS users_with_at_least_two_seats";
 
+        Query query = entityManager.createNativeQuery(sqlQuery);
+
+        Object result = query.getSingleResult();
+
+        return ((Number) result).longValue();
+    }
+
+    public Map<String, Object> cancelTicket(int transportId, LocalDate journeyDate, String seatNo) {
+
+        Map<String, Object> result = new HashMap<>();
+
+        Booking booking = bookingRepository.findBookingByTransportIdJourneyDateAndSeat(transportId, journeyDate, seatNo);
+
+        if (booking == null) {
+            // Booking not found
+            result.put("message", "Ticket not found");
+            return result;
+        }
+
+        // Calculate refund amount
+        int refundAmount = calculateRefundAmount(booking.getTicketEntity());
+
+        // Get the user ID
+        int userId = booking.getUser().getUserId();
+
+        // Refund logic to refund amount to the user
+
+        result.put("userId", userId);
+        result.put("amountToBeRefunded", refundAmount);
+
+        return result;
+    }
+
+    private int calculateRefundAmount(TicketEntity ticketEntity) {
+
+        int totalCostPaid = ticketEntity.getTotalCostPaid();
+        int refundPercentage = ticketEntity.getRefundPercentage();
+
+        // Calculate refund amount
+        int refundAmount = (totalCostPaid * refundPercentage) / 100;
+
+        return refundAmount;
+    }
 
 }
 

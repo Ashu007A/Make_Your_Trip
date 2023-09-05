@@ -1,4 +1,4 @@
-package com.example.makeyourtrip.RequestDto;
+package com.example.makeyourtrip.RequestDTOs;
 
 
 import lombok.Data;

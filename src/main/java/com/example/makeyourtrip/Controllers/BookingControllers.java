@@ -1,8 +1,8 @@
 package com.example.makeyourtrip.Controllers;
 
-import com.example.makeyourtrip.RequestDto.BookingRequest;
-import com.example.makeyourtrip.RequestDto.GetAvailableSeatsDto;
-import com.example.makeyourtrip.ResponseDtos.AvailableSeatResponseDto;
+import com.example.makeyourtrip.RequestDTOs.BookingRequest;
+import com.example.makeyourtrip.RequestDTOs.GetAvailableSeatsDto;
+import com.example.makeyourtrip.ResponseDTOs.AvailableSeatResponseDto;
 import com.example.makeyourtrip.Services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

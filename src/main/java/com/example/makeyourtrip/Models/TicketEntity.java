@@ -41,5 +41,6 @@ public class TicketEntity {
     @JoinColumn
     private Booking booking;
 
+    private int refundPercentage;
 
 }

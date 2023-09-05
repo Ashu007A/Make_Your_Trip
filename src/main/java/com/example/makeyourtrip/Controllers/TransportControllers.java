@@ -1,22 +1,20 @@
 package com.example.makeyourtrip.Controllers;
 
-import com.example.makeyourtrip.Models.Transport;
-import com.example.makeyourtrip.RequestDto.AddTransportDto;
-import com.example.makeyourtrip.RequestDto.SearchFlightDto;
-import com.example.makeyourtrip.ResponseDtos.FlightResult;
+import com.example.makeyourtrip.RequestDTOs.AddTransportDto;
+import com.example.makeyourtrip.RequestDTOs.SearchFlightDto;
+import com.example.makeyourtrip.ResponseDTOs.FlightResult;
+import com.example.makeyourtrip.Services.BookingService;
 import com.example.makeyourtrip.Services.TransportService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/transport")
 @RestController
@@ -25,6 +23,9 @@ public class TransportControllers {
 
     @Autowired
     private TransportService transportService;
+
+    @Autowired
+    private BookingService bookingService;
 
     @PostMapping("/add")
     public ResponseEntity addTransport(@RequestBody AddTransportDto addTransportDto){
@@ -44,6 +45,32 @@ public class TransportControllers {
         List<FlightResult> flightResults = transportService.searchForFlights(searchFlightDto);
 
         return new ResponseEntity(flightResults,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/cancelTicket")
+    public ResponseEntity<Map<String, Object>> cancelTicket(@RequestParam int transportId,
+                                                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate journeyDate,
+                                                            @RequestParam String seatNo) {
+        Map<String, Object> result = bookingService.cancelTicket(transportId, journeyDate, seatNo);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/cheapestTransport")
+    public ResponseEntity<Integer> findCheapestTransport(@RequestParam String fromCity,
+                                                         @RequestParam String toCity) {
+        int cheapestTransportId = transportService.findCheapestTransport(fromCity, toCity);
+
+        if (cheapestTransportId == -1) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(cheapestTransportId, HttpStatus.OK);
+    }
+
+    @GetMapping("/companyRevenue")
+    public ResponseEntity<Double> getCompanyRevenue(@RequestParam String companyName) {
+        double revenue = transportService.calculateCompanyRevenueInAugust(companyName);
+        return ResponseEntity.ok(revenue);
     }
 
 }

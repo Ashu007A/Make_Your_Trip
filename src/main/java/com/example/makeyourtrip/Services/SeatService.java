@@ -5,7 +5,7 @@ import com.example.makeyourtrip.Models.Seat;
 import com.example.makeyourtrip.Models.Transport;
 import com.example.makeyourtrip.Repositories.SeatRepository;
 import com.example.makeyourtrip.Repositories.TransportRepository;
-import com.example.makeyourtrip.RequestDto.AddFlightSeatDto;
+import com.example.makeyourtrip.RequestDTOs.AddFlightSeatDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

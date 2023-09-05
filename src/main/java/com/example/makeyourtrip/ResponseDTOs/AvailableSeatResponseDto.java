@@ -1,4 +1,4 @@
-package com.example.makeyourtrip.ResponseDtos;
+package com.example.makeyourtrip.ResponseDTOs;
 
 
 import com.example.makeyourtrip.Enums.SeatType;

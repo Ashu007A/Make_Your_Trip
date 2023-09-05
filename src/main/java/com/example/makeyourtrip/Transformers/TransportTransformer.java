@@ -1,8 +1,8 @@
 package com.example.makeyourtrip.Transformers;
 
 import com.example.makeyourtrip.Models.Transport;
-import com.example.makeyourtrip.RequestDto.AddTransportDto;
-import com.example.makeyourtrip.ResponseDtos.FlightResult;
+import com.example.makeyourtrip.RequestDTOs.AddTransportDto;
+import com.example.makeyourtrip.ResponseDTOs.FlightResult;
 
 public class TransportTransformer {
 
